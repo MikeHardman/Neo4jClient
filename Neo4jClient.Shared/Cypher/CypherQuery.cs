@@ -23,7 +23,8 @@ namespace Neo4jClient.Cypher
         readonly CypherResultFormat resultFormat;
         readonly IContractResolver jsonContractResolver;
         readonly int? maxExecutionTime;
-        readonly NameValueCollection customHeaders;
+        private readonly NameValueCollection customHeaders;
+        public bool IsWrite { get; }
 
         public CypherQuery(
             string queryText,
@@ -41,7 +42,8 @@ namespace Neo4jClient.Cypher
             CypherResultFormat resultFormat,
             IContractResolver contractResolver = null, 
             int? maxExecutionTime = null, 
-            NameValueCollection customHeaders = null
+            NameValueCollection customHeaders = null,
+            bool isWrite = true
             )
         {
             this.queryText = queryText;
@@ -51,46 +53,26 @@ namespace Neo4jClient.Cypher
             jsonContractResolver = contractResolver ?? GraphClient.DefaultJsonContractResolver;
             this.maxExecutionTime = maxExecutionTime;
             this.customHeaders = customHeaders;
+            IsWrite = isWrite;
         }
 
-        public IDictionary<string, object> QueryParameters
-        {
-            get { return queryParameters; }
-        }
+        public IDictionary<string, object> QueryParameters => queryParameters;
 
-        public string QueryText
-        {
-            get { return queryText; }
-        }
+        public string QueryText => queryText;
 
-        public CypherResultFormat ResultFormat
-        {
-            get { return resultFormat; }
-        }
+        public CypherResultFormat ResultFormat => resultFormat;
 
-        public CypherResultMode ResultMode
-        {
-            get { return resultMode; }
-        }
+        public CypherResultMode ResultMode => resultMode;
 
-        public IContractResolver JsonContractResolver
-        {
-            get { return jsonContractResolver; }
-        }
+        public IContractResolver JsonContractResolver => jsonContractResolver;
 
-        public int? MaxExecutionTime
-        {
-            get { return maxExecutionTime; }
-        }
+        public int? MaxExecutionTime => maxExecutionTime;
 
         /// <summary>
         /// Custom headers to add to REST calls to Neo4j server.
         /// Example usage: This can be used to provide extra information to a Neo4j Loadbalancer. 
         /// </summary>
-        public NameValueCollection CustomHeaders
-        {
-            get { return customHeaders;}
-        }
+        public NameValueCollection CustomHeaders => customHeaders;
 
         CustomJsonSerializer BuildSerializer()
         {
